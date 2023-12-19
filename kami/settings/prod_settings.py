@@ -1,5 +1,7 @@
 from kami.settings.base_settings import *
 
+import dj_database_url
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -15,8 +17,5 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'prod.sqlite3',
-    }
+    'default': dj_database_url.config()
 }
