@@ -1,3 +1,11 @@
+# airplanes
+Aircraft Passenger Capacity Consumption API
+
+## Environment Variables
+The following environment variables are required to run the app.
+- DEV_SECRET_KEY
+- DATABASE_URL
+
 ## Running the app
 
 1. Clone the repo.
@@ -60,3 +68,9 @@ To view the coverage report, use the command below.
 ```sh
 coverage report -m
 ```
+
+## Assumptions / Additional notes
+- `Positive*` integer model fields have been used based on the assumption that `id` and `passenger` fields should not have negative values.
+- `PositiveSmallIntegerField` has been used for `id` and `passenger` fields instead of `PositiveIntegerField` as might be expected. `PositiveSmallIntegerField` will save at least 50% more database space than `PositiveIntegerField` while still satisfying requirements. This is based on the following assumptions;
+  - [that the largest airline has a fleet of less than 1000 aircraft](https://en.wikipedia.org/wiki/Largest_airlines_in_the_world#Aircraft_owned)
+  - [that the highest capacity plane has a capacity of less than 1000 passengers](https://en.wikipedia.org/wiki/Airbus_A380)
