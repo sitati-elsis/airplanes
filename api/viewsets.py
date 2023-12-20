@@ -1,3 +1,4 @@
+from rest_framework.request import Request
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
@@ -16,14 +17,14 @@ class PlaneViewset(viewsets.ViewSet):
         fields.
     """
 
-    def create(self, request):
+    def create(self, request: Request) -> Response:
         serializer = serializers.PlaneSerializer(data=request.data)
         if serializer.is_valid():
             utils.create_plane_entry(serializer.validated_data)
             return Response(serializer.validated_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def list(self, request):
+    def list(self, request: Request) -> Response:
         planes = utils.fetch_planes()
         flight_data = utils.calculate_flight_data(planes)
         consumption_all_flights, maximum_minutes_flight = flight_data
