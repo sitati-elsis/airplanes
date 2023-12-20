@@ -1,11 +1,3 @@
-# airplanes
-Aircraft Passenger Capacity Consumption API
-
-## Environment Variables
-The following environment variables are required to run the app.
-- DEV_SECRET_KEY
-- DATABASE_URL
-
 ## Running the app
 
 1. Clone the repo.
@@ -55,3 +47,16 @@ The following environment variables are required to run the app.
         ]
     }
     ```
+
+## API documentation
+Interactive API documentation can be accessed through [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/).
+
+## Tests and Test Coverage
+Tests can be run using the following command.
+```sh
+coverage run manage.py test
+```
+To view the coverage report, use the command below.
+```sh
+coverage report -m
+```
