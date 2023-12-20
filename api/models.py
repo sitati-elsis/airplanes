@@ -13,7 +13,7 @@ class Plane(models.Model):
     passengers = models.PositiveSmallIntegerField()
 
     @property
-    def fuel_tank_capacity(self):
+    def fuel_tank_capacity(self) -> int:
         """
         Fuel tank capacity is calculated using the formula below.
 
@@ -22,7 +22,7 @@ class Plane(models.Model):
         return self.id * self.litres
 
     @property
-    def plane_fuel_comsumption(self):
+    def plane_fuel_comsumption(self) -> float:
         """
         Fuel consumption (per minute) when the plane is in flight, regardless
         of whether it contains passengers.
@@ -35,7 +35,7 @@ class Plane(models.Model):
         return math.log(self.id, 10) * 0.8
 
     @property
-    def passenger_consumption(self):
+    def passenger_consumption(self) -> float:
         """
         Each passenger will impact the plane's fuel consumption (per minute)
         using the formula below.
@@ -45,7 +45,7 @@ class Plane(models.Model):
         return self.passengers * 0.002
 
     @property
-    def total_fuel_consumption(self):
+    def total_fuel_consumption(self) -> float:
         """
         This accounts for combined consumption figures (per minute) as shown by
         the formula below.
