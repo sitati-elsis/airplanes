@@ -51,3 +51,24 @@ class TestPlanes(APITestCase):
         # assert that no plane entry was made in the database
         planes = models.Plane.objects.all()
         self.assertEqual(len(planes), 0)
+
+    def test_cannot_create_plane_entry_without_passengers_field(self):
+        """
+        Tests that a plane entry cannot be made without required field
+        `passengers`.
+        """
+        # assert that database contains no Plane objects
+        planes = models.Plane.objects.all()
+        self.assertEqual(len(planes), 0)
+        # attempt to create plane entry
+        data = {
+            'id': self.fake.random_int(max=32767),
+        }
+        url = reverse('planes-list')
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 400)
+        decoded = response.content.decode('utf-8')
+        self.assertIn('This field is required', decoded)
+        # assert that no plane entry was made in the database
+        planes = models.Plane.objects.all()
+        self.assertEqual(len(planes), 0)
