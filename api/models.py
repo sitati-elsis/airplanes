@@ -55,3 +55,13 @@ class Plane(models.Model):
         passenger_consumption = passengers * 0.002
         """
         return self.passengers * 0.002
+
+    @property
+    def total_fuel_consumption(self):
+        """
+        This accounts for combined consumption figures (per minute) as shown by
+        the formula below.
+
+        total_fuel_consumption =  plane_fuel_comsumption() + passenger_consumption
+        """
+        return self.plane_fuel_comsumption() + self.passenger_consumption()
