@@ -21,6 +21,7 @@ from rest_framework.schemas import get_schema_view
 
 
 from api import viewsets
+from api.custom_schemas.planes_input_field import PlanesInputSchema
 
 
 router = DefaultRouter()
@@ -35,6 +36,7 @@ urlpatterns.append(
             title="KAMI Airlines",
             description="API for KAMI Airlines REST API.",
             version="1.0.0",
+            generator_class=PlanesInputSchema,
         ),
         name='openapi-schema'
     )
