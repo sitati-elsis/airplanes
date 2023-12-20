@@ -1,14 +1,13 @@
 from typing import Any
 
 from rest_framework.schemas.openapi import SchemaGenerator
-from rest_framework.schemas.openapi import DRFOpenAPISchema
 
 class PlanesInputSchema(SchemaGenerator):
     """
     Defines expected Schema structure when adding planes from the interactive
     documentation
     """
-    def get_schema(self, *args: Any, **kwargs: Any) -> DRFOpenAPISchema:
+    def get_schema(self, *args: Any, **kwargs: Any): # type: ignore
         schema = super().get_schema(*args, **kwargs)
         schema_structure = {
             'type': 'object',
