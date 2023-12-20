@@ -1,3 +1,5 @@
+import math
+
 from django.urls import reverse
 from faker import Faker
 from rest_framework.test import APITestCase
@@ -97,3 +99,70 @@ class TestPlanes(APITestCase):
         # assert that no plane entry was made in the database
         planes = models.Plane.objects.all()
         self.assertEqual(len(planes), 0)
+
+    def test_consumption_calculations(self):
+        """
+        This test adds 10 planes with random `id` and `passenger` values,
+        then checks the response against pre-calculated results.
+        """
+        # create 10 planes
+        planes = []
+        for _ in range(10):
+            planes.append(
+                {
+                    'id': self.fake.random_int(max=32767),
+                    'passengers': self.fake.random_int(max=32767),
+                    'litres': 200
+                }
+            )
+        url = reverse('planes-list')
+        for plane in planes:
+            res = self.client.post(url, plane)
+            self.assertEqual(res.status_code, 200)
+        # pre-calculate all consumptions derived from `id` and `passenger` values.
+        tank_capacities = []
+        plane_fuel_comsumption = []
+        passenger_consumption = []
+        total_fuel_consumption = []
+        combined_plane_consumption_per_minute = 0
+        for plane in planes:
+            plane_id = plane['id']
+            plane_litres = plane['litres']
+            plane_passengers = plane['passengers']
+            tank_capacities.append(
+                plane_id * plane_litres
+            )
+            plane_only_litres_per_minute = math.log(plane_id, 10) * 0.8
+            plane_fuel_comsumption.append(
+                plane_only_litres_per_minute
+            )
+            passenger_consumption_litres_per_minute = plane_passengers * 0.002
+            passenger_consumption.append(
+                passenger_consumption_litres_per_minute
+            )
+            fuel_consumption_per_plane_per_minute = (
+                plane_only_litres_per_minute +
+                    passenger_consumption_litres_per_minute
+            )
+            total_fuel_consumption.append(
+                fuel_consumption_per_plane_per_minute
+            )
+            combined_plane_consumption_per_minute += \
+                fuel_consumption_per_plane_per_minute
+        # calculate maximum minutes able to fly
+        maximum_minutes = float('inf') * -1
+        for index, litres_per_min in enumerate(total_fuel_consumption):
+            minutes = tank_capacities[index] / litres_per_min
+            if minutes > maximum_minutes:
+                maximum_minutes = minutes
+        # compare response against pre-calculated results
+        response = self.client.get(url)
+        json_response = response.json()
+        self.assertEqual(
+            json_response['total_airplane_fuel_consumption_per_minute'],
+            combined_plane_consumption_per_minute
+        )
+        self.assertEqual(
+            json_response['maximum_minutes_able_to_fly'],
+            maximum_minutes
+        )
