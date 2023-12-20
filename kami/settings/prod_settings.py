@@ -1,6 +1,7 @@
 from kami.settings.base_settings import *
 
 import dj_database_url
+import os
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
