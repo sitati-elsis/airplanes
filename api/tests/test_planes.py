@@ -8,10 +8,10 @@ from api import models
 
 
 class TestPlanes(APITestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.fake = Faker()
 
-    def test_successfully_create_plane(self):
+    def test_successfully_create_plane(self) -> None:
         """
         Tests that user can create a plane entry when they supply `id` and
         `passenger` field values of type PositiveSmallInteger (0 - 32767).
@@ -34,7 +34,7 @@ class TestPlanes(APITestCase):
         self.assertEqual(plane.id, data['id'])
         self.assertEqual(plane.passengers, data['passengers'])
 
-    def test_cannot_create_plane_entry_without_id_field(self):
+    def test_cannot_create_plane_entry_without_id_field(self) -> None:
         """
         Tests that a plane entry cannot be made without required field `id`.
         """
@@ -54,7 +54,7 @@ class TestPlanes(APITestCase):
         planes = models.Plane.objects.all()
         self.assertEqual(len(planes), 0)
 
-    def test_cannot_create_plane_entry_without_passengers_field(self):
+    def test_cannot_create_plane_entry_without_passengers_field(self) -> None:
         """
         Tests that a plane entry cannot be made without required field
         `passengers`.
@@ -75,7 +75,7 @@ class TestPlanes(APITestCase):
         planes = models.Plane.objects.all()
         self.assertEqual(len(planes), 0)
 
-    def test_cannot_create_plane_entry_without_id_and_passengers_field(self):
+    def test_cannot_create_plane_entry_without_id_and_passengers_field(self) -> None:
         """
         Tests that a plane entry cannot be made without both required fields
         `id` and `passengers`.
@@ -100,7 +100,7 @@ class TestPlanes(APITestCase):
         planes = models.Plane.objects.all()
         self.assertEqual(len(planes), 0)
 
-    def test_consumption_calculations(self):
+    def test_consumption_calculations(self) -> None:
         """
         This test adds 10 planes with random `id` and `passenger` values,
         then checks the response against pre-calculated results.
