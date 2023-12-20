@@ -27,16 +27,12 @@ def calculate_flight_data(planes):
     """
     # combined total consumption per minute.
     total_consumption_all_flights = 0
-    # NOTE: The most fuel efficient flight will have the least fuel consumption
-    # and therefore will also have the ability to fly maximum minutes in a flight.
-    most_fuel_efficient = float('inf')
-    maximum_minutes = 0
+    # NOTE: The most fuel efficient flight will have the maximum minutes flight
+    # duration.
+    maximum_flight_minutes = float('inf') * -1
     for plane in planes:
         total_consumption_all_flights += plane.total_fuel_consumption
-        if most_fuel_efficient > plane.total_fuel_consumption:
-            most_fuel_efficient = plane.total_fuel_consumption
-            maximum_minutes = (
-                plane.fuel_tank_capacity /
-                    plane.total_fuel_consumption
-            )
-    return total_consumption_all_flights, maximum_minutes
+        current_flight_minutes = plane.fuel_tank_capacity / plane.total_fuel_consumption
+        if current_flight_minutes > maximum_flight_minutes:
+            maximum_flight_minutes = current_flight_minutes
+    return total_consumption_all_flights, maximum_flight_minutes
