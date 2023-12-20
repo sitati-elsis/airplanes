@@ -4,30 +4,13 @@ from django.db import models
 
 # Create your models here.
 class Plane(models.Model):
-    # TODO: Using PositiveSmallIntegerField for id because
-    # 1. it needs to be a numeric value inorder to calculate the plane's
-    #   fuel tank capacity
-    # 2. PositiveSmallIntegerField has a range between 0-32767. This saves
-    #   on significant database space compared to usage of similar fields
-    #   like BigIntegerField which spans from
-    #   (-9223372036854775808 to 9223372036854775807).
-    # 3. Using PositiveSmallIntegerField should be more than adequate considering
-    #   the largest airline has less than 1000 aircraft. Wikipedia for reference
-    #   (https://en.wikipedia.org/wiki/Largest_airlines_in_the_world#Aircraft_owned).
     id = models.PositiveSmallIntegerField(unique=True)
-    # TODO: Django assigns fields with the name `id` as primary keys by default.
+    # NOTE: Django assigns fields with the name `id` as primary keys by default.
     # To use a field name other than `id` as primary key, define your custom
     # field name and include `primary_key=True`
     plane_id = models.SmallAutoField(primary_key=True)
     litres = models.PositiveSmallIntegerField(default=200)
-    # TODO: using PositiveSmallIntegerField based on assumption that largest
-    # capacity plane is the Airbus A380 (https://en.wikipedia.org/wiki/Airbus_A380)
-    # with a capacity of less than 1000.
-    # PositiveSmallIntegerField will comfortably accomodate this and leave
-    # enough room for future expansion.
     passengers = models.PositiveSmallIntegerField()
-
-
 
     @property
     def fuel_tank_capacity(self):
