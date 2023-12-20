@@ -1,0 +1,31 @@
+name: airplanes
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  test_airplanes_api:
+    name: Test Airplane REST API
+    runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: 'use-gh-secrets-instead'
+      DATABASE_URL: 'sqlite:///db.sqlite3'
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Upgrade pip
+      run: pip install --upgrade pip
+    - name: Install project dependencies
+      run: pip install -r requirements.txt
+      working-directory: airplanes
+    - name: Run tests with coverage
+      run: coverage run manage.py test
+      working-directory: airplanes
