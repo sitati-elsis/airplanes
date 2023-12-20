@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
 
 
 from api import viewsets
@@ -26,3 +27,14 @@ router.register(r'planes', viewsets.PlaneViewset, basename='planes')
 
 
 urlpatterns = router.urls
+urlpatterns.append(
+    path(
+        'openapi/',
+        get_schema_view(
+            title="KAMI Airlines",
+            description="API for KAMI Airlines REST API.",
+            version="1.0.0",
+        ),
+        name='openapi-schema'
+    )
+)
