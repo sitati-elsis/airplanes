@@ -68,4 +68,4 @@ class Plane(models.Model):
 
         total_fuel_consumption =  plane_fuel_comsumption() + passenger_consumption
         """
-        return self.plane_fuel_comsumption() + self.passenger_consumption()
+        return self.plane_fuel_comsumption + self.passenger_consumption
