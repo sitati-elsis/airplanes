@@ -15,6 +15,10 @@ class Plane(models.Model):
     #   the largest airline has less than 1000 aircraft. Wikipedia for reference
     #   (https://en.wikipedia.org/wiki/Largest_airlines_in_the_world#Aircraft_owned).
     id = models.PositiveSmallIntegerField(unique=True)
+    # TODO: Django assigns fields with the name `id` as primary keys by default.
+    # To use a field name other than `id` as primary key, define your custom
+    # field name and include `primary_key=True`
+    plane_id = models.PositiveSmallIntegerField(primary_key=True)
     litres = models.PositiveSmallIntegerField(default=200)
     # TODO: using PositiveSmallIntegerField based on assumption that largest
     # capacity plane is the Airbus A380 (https://en.wikipedia.org/wiki/Airbus_A380)
