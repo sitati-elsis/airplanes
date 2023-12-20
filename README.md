@@ -59,6 +59,12 @@ The following environment variables are required to run the app.
 ## API documentation
 Interactive API documentation can be accessed through [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/).
 
+## Running mypy
+`mypy` can be run to perform static checks on the code. To perform this check, run the following command;
+```sh
+mypy -p api
+```
+
 ## Tests and Test Coverage
 Tests can be run using the following command.
 ```sh
