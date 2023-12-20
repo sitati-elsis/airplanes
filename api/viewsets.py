@@ -15,6 +15,12 @@ class PlaneViewset(viewsets.ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request):
-        queryset = models.Plane.objects.all()
-        serializer = serializers.PlaneSerializer(queryset, many=True)
-        return Response(serializer.data)
+        planes = utils.fetch_planes()
+        flight_data = utils.calculate_flight_data(planes)
+        consumption_all_flights, maximum_minutes_flight = flight_data
+        json_resp = {
+            "total_airplane_fuel_consumption_per_minute": consumption_all_flights,
+            "maximum_minutes_able_to_fly": maximum_minutes_flight,
+            "planes": serializers.PlaneSerializer(planes, many=True).data
+        }
+        return Response(json_resp, status=status.HTTP_200_OK)
