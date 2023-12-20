@@ -7,6 +7,15 @@ from api import serializers, utils
 
 
 class PlaneViewset(viewsets.ViewSet):
+    """
+    list:
+        Returns `total_airplane_fuel_consumption_per_minute`,
+        `maximum_minutes_able_to_fly` and a list of `planes` added.
+    create:
+        Allow for input of an airplane with user defined `id` and `passenger`
+        fields.
+    """
+
     def create(self, request):
         serializer = serializers.PlaneSerializer(data=request.data)
         if serializer.is_valid():
