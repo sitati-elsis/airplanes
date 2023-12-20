@@ -1,7 +1,11 @@
+from django.db.models.query import QuerySet
+
+
 from api import models
+from api.typed_json import planes as planes_json
 
 
-def create_plane_entry(validated_json):
+def create_plane_entry(validated_json: planes_json.PlaneDict) -> None:
     """
     Helper method to create Phone entries in the database.
     """
@@ -10,13 +14,13 @@ def create_plane_entry(validated_json):
     new_plane.passengers = validated_json['passengers']
     new_plane.save()
 
-def fetch_planes():
+def fetch_planes() -> QuerySet[models.Plane]:
     """
     Helper method to fetch all planes from the database.
     """
     return models.Plane.objects.all()
 
-def calculate_flight_data(planes):
+def calculate_flight_data(planes:  QuerySet[models.Plane]) -> tuple[float, float]:
     """
     This method takes in ten plane objects (in the form of a Django queryset)
     and does the following...
@@ -26,7 +30,7 @@ def calculate_flight_data(planes):
             "maximum minutes able to fly".
     """
     # combined total consumption per minute.
-    total_consumption_all_flights = 0
+    total_consumption_all_flights = 0.0
     # NOTE: The most fuel efficient flight will have the maximum minutes flight
     # duration.
     maximum_flight_minutes = float('inf') * -1
