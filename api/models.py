@@ -48,7 +48,8 @@ class Plane(models.Model):
 
         plane_fuel_consumption = math.log(id) * 0.8 litres
         """
-        return math.log(self.id) * 0.8
+        # NOTE: Assumption made here is that we are using base10 for logarithms.
+        return math.log(self.id, 10) * 0.8
 
     @property
     def passenger_consumption(self):
