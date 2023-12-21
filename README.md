@@ -17,11 +17,16 @@ The following environment variables are required to run the app.
     cd airplanes/
     ```
 3. Create a virtual environment and activate it.
+
 4. Inside the virtual environment, install app dependencies.
     ```sh
     pip install -r requirements.txt
     ```
-5. Start the app.
+5.  Run Migrations
+    ```sh
+    python manage.py migrate
+    ```
+6. Start the app.
     ```sh
     python manage.py runserver
     ```
